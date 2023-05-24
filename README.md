@@ -1,4 +1,4 @@
-# untitled
+# Details :-
 
 - A new Flutter project using Database which can permanently store your data offline.
 - This app have features like :-
@@ -8,18 +8,7 @@
                                 
                    
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
 
 <p>
   <img src="https://github.com/MrToxicDeveloper/Expense_Manager/assets/119030630/1eac11ac-2d50-47f1-9385-05ed20614645" height="20%" width="20%">
