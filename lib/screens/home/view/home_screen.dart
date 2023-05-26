@@ -50,19 +50,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 Get.defaultDialog(
                   contentPadding: EdgeInsets.all(10),
                   title: "Add Category",
+                  titleStyle: TextStyle(color: Colors.white),
+                  backgroundColor: Color(0xff171717),
                   content: Column(
                     children: [
-                      TextField(
-                        controller: txtaddc,
-                        // style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          hintText: "Add category",
-                          // hintStyle: TextStyle(color: Colors.white),
-                          // border: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black)),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 1.h),
+                        child: TextField(
+                          controller: txtaddc,
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            hintText: "Category",
+                            hintStyle: TextStyle(color: Colors.white),
+                            // border: OutlineInputBorder(),
+                            enabledBorder:
+                            OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                            focusedBorder:
+                            OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                          ),
                         ),
                       ),
                       SizedBox(

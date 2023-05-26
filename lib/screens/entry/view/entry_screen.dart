@@ -24,6 +24,7 @@ class _EntryScreenState extends State<EntryScreen> {
     super.initState();
     entryController.readDb2();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,26 +68,33 @@ class _EntryScreenState extends State<EntryScreen> {
                   height: 20,
                 ),
                 Obx(
-                  () => DropdownButton(
-                    isExpanded: true,
-                    dropdownColor: Color(0xff1b1b1d),
-                    value: entryController.cateName.value,
-                    items: entryController.cateList
-                        .map(
-                          (e) => DropdownMenuItem(
-                            value: "${e['category']}",
-                            child: Text(
-                              "  ${e['category']}",
-                              style: TextStyle(color: Colors.white),
+                  () => Container(
+                    decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(color: Colors.white),
+                        borderRadius: BorderRadius.circular(5)),
+                    alignment: Alignment.center,
+                    child: DropdownButton(
+                      isExpanded: true,
+                      dropdownColor: Color(0xff1b1b1d),
+                      value: entryController.cateName.value,
+                      items: entryController.cateList
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: "${e['category']}",
+                              child: Text(
+                                "  ${e['category']}",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      entryController.cateName.value = value as String;
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        entryController.cateName.value = value as String;
 
-                      print(entryController.cateName);
-                    },
+                        print(entryController.cateName);
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -213,7 +221,7 @@ class _EntryScreenState extends State<EntryScreen> {
               onPressed: () {
                 EntryModel entryModel = EntryModel(
                     Amount: txtamount.text,
-                    Category: txtcategory.text,
+                    Category: entryController.cateName.value,
                     Date:
                         "${entryController.current.value.day}/${entryController.current.value.month}/${entryController.current.value.year}",
                     Time:

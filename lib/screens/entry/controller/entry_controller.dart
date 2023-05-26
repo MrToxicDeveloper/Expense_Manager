@@ -8,9 +8,11 @@ class EntryController extends GetxController {
   Rx<TimeOfDay> currenttime = TimeOfDay.now().obs;
 
   RxString ddName = '0'.obs;
-  RxString cateName=''.obs;
+  RxString cateName = ''.obs;
+
   RxString ffName = '0'.obs;
-  RxString ddcategory = ''.obs;
+  RxString ffmethod = 'All'.obs;
+  RxString ffcate = ''.obs;
 
   RxDouble totalAmount = 0.0.obs;
   RxDouble totalIncome = 0.0.obs;
@@ -71,8 +73,7 @@ class EntryController extends GetxController {
   Future<void> readDb2() async {
     print("=========================================readcon");
     cateList.value = await DBHelper.dbHelper.readDB2();
-    cateName.value=cateList[0]['category'];
-
+    cateName.value = cateList[0]['category'];
   }
 
   void updateDb({required EntryModel e1, required int Id}) {
@@ -86,7 +87,42 @@ class EntryController extends GetxController {
   }
 
   Future<void> IEFilter(String status) async {
-    dataList.value = await DBHelper.dbHelper.IEFilter(status);
-    readDb();
+    if (status != "2") {
+      dataList.value = await DBHelper.dbHelper.IEFilter(status);
+    } else {
+      readDb();
+    }
+  }
+
+  Future<void> categoryFilter(String cate) async {
+    if (cate != "") {
+      dataList.value = await DBHelper.dbHelper.categoryFilter(cate);
+      ffcate.value = cateList[0]['category'];
+    } else {
+      readDb();
+    }
+  }
+
+  Future<void> methodFilter(String method) async {
+    if (method != "") {
+      dataList.value = await DBHelper.dbHelper.methodFilter(method);
+    } else {
+      readDb();
+    }
+  }
+
+  Future<void> multiSort({
+    required statusCode,
+    required method,
+    required category,
+  }) async {
+    print(
+        "==============================================================multisort");
+    if (statusCode == "2" && method == "All" && category == "") {
+      readDb();
+    } else {
+      dataList.value = await DBHelper.dbHelper.multiSort(
+          statusCode: statusCode, method: method, category: category);
+    }
   }
 }

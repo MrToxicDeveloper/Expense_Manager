@@ -86,15 +86,14 @@ class DBHelper {
   }
 
   Future<List<Map>> readIncome() async {
-
     database = await checkDB();
 
     String query = "SELECT * FROM $tableName WHERE $c_status = 0";
     List<Map> l1 = await database!.rawQuery(query);
     return l1;
   }
-  Future<List<Map>> readExpense() async {
 
+  Future<List<Map>> readExpense() async {
     database = await checkDB();
 
     String query = "SELECT * FROM $tableName WHERE $c_status = 1";
@@ -137,15 +136,121 @@ class DBHelper {
     database!.delete(tableName, where: "id=?", whereArgs: [Id]);
   }
 
-  void multiSorting(){
-    String query = "";
+  // Filter({ required statusCode, required method,required category,}) async {
+  //   print("helper ============================");
+  //   print(statusCode);
+  //   print(method);
+  //   if(statusCode != "2" && method == "All" && category == "")
+  //   {
+  //     database = await checkDB();
+  //     String query = "SELECT * FROM $tableName WHERE $c_status = $statusCode";
+  //     List<Map> l1 = await database!.rawQuery(query);
+  //     return l1;
+  //   }
+  //   else if(statusCode == 2 && method != "all" && category == "")
+  //   {
+  //     database = await checkDB();
+  //     String query = "SELECT * FROM $tableName WHERE $c_method = '$method'";
+  //     List<Map> l1 = await database!.rawQuery(query);
+  //     return l1;
+  //   }
+  //   else if(statusCode == 2 && method == "all" && category != "")
+  //   {
+  //     String query = "SELECT * FROM $tableName WHERE $c_date = '$category'";
+  //     List<Map> l1 = await database!.rawQuery(query);
+  //     return l1;
+  //   }
+  //   else if(statusCode != 2 && method == "all" && category != "")
+  //   {
+  //     String query = "SELECT * FROM $tableName WHERE $c_date = '$category' AND $c_status = $statusCode";
+  //     List<Map> l1 = await database!.rawQuery(query);
+  //     return l1;
+  //   }
+  //   else if(statusCode == 2 && method != "all" && category != "")
+  //   {
+  //     String query = "SELECT * FROM $tableName WHERE $c_date = '$category' AND $c_method = '$method'";
+  //     List<Map> l1 = await database!.rawQuery(query);
+  //     return l1;
+  //   }
+  //   else if (statusCode != 2 && method != 'all' && category == "") {
+  //     database = await checkDB();
+  //     String query = "SELECT * FROM $tableName WHERE $c_method = '$method' AND $c_status = '$statusCode'";
+  //     List<Map> l1 = await database!.rawQuery(query);
+  //     return l1;
+  //   }
+  //   else if(statusCode != 2 && method != 'all' && category != "")
+  //   {
+  //     String query = "SELECT * FROM $tableName WHERE $c_date = '$category' AND $c_method = '$method' AND $c_status = '$statusCode'";
+  //     List<Map> l1 = await database!.rawQuery(query);
+  //     return l1;
+  //   }
+  //
+  // }
+  multiSort({
+    required statusCode,
+    required method,
+    required category,
+  }) async {
+    database = await checkDB();
+
+    print("helper ============================");
+    print(statusCode);
+    print(method);
+    if (statusCode != "2" && method == "All" && category == "") {
+      String query = "SELECT * FROM $tableName WHERE $c_status = '$statusCode'";
+      List<Map> l1 = await database!.rawQuery(query);
+      return l1;
+    } else if (statusCode == 2 && method != "All" && category == "") {
+      String query = "SELECT * FROM $tableName WHERE $c_method = '$method'";
+      List<Map> l1 = await database!.rawQuery(query);
+      return l1;
+    } else if (statusCode == 2 && method == "All" && category != "") {
+      String query = "SELECT * FROM $tableName WHERE $c_category = '$category'";
+      List<Map> l1 = await database!.rawQuery(query);
+      return l1;
+    } else if (statusCode != 2 && method == "All" && category != "") {
+      String query =
+          "SELECT * FROM $tableName WHERE $c_category = '$category' AND $c_status = '$statusCode'";
+      List<Map> l1 = await database!.rawQuery(query);
+      return l1;
+    } else if (statusCode == 2 && method != "All" && category != "") {
+      String query =
+          "SELECT * FROM $tableName WHERE $c_category = '$category' AND $c_method = '$method'";
+      List<Map> l1 = await database!.rawQuery(query);
+      return l1;
+    } else if (statusCode != 2 && method != 'All' && category == "") {
+      String query =
+          "SELECT * FROM $tableName WHERE $c_method = '$method' AND $c_status = '$statusCode'";
+      List<Map> l1 = await database!.rawQuery(query);
+      return l1;
+    } else if (statusCode != 2 && method != 'All' && category != "") {
+      String query =
+          "SELECT * FROM $tableName WHERE $c_category = '$category' AND $c_method = '$method' AND $c_status = '$statusCode'";
+      List<Map> l1 = await database!.rawQuery(query);
+      return l1;
+    }
   }
 
   Future<List<Map>> IEFilter(String status) async {
-
     database = await checkDB();
 
     String query = "SELECT * FROM $tableName WHERE $c_status = $status";
+    List<Map> l1 = await database!.rawQuery(query);
+    return l1;
+  }
+
+  Future<List<Map>> methodFilter(String method) async {
+    database = await checkDB();
+
+    String query = "SELECT * FROM $tableName WHERE $c_method = $method";
+    List<Map> l1 = await database!.rawQuery(query);
+    return l1;
+  }
+
+  Future<List<Map>> categoryFilter(String cate) async {
+    database = await checkDB();
+
+    String query = "SELECT * FROM $tableName WHERE $c_category = $cate";
     List<Map> l1 = await database!.rawQuery(query);
     return l1;
   }
